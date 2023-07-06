@@ -1,12 +1,20 @@
 // ignore_for_file: sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'controllers/tap_controller.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Topic 01: Dependency Injection
+    // Dependency injection means creating an instance of the class TapController
+    // in another dart class, In this case that another class is this current widget
+    TapController controller = Get.put(TapController());
+
     return Scaffold(
       body: Container(
         width: double.maxFinite,
@@ -14,8 +22,20 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // Topic 01: Showing the controller updates
+            GetBuilder<TapController>(
+              builder: (tapController) {
+                return Container(
+                  child: Text(tapController.x.toString()),
+                );
+              },
+            ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                // Topic 01: Using the GetxController
+                // Access the attributes and methods
+                controller.increaseX();
+              },
               child: Container(
                 margin: const EdgeInsets.all(20),
                 width: double.maxFinite,
